@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { C, FONT, R, SHADOW } from "../../shared/tokens";
 import { Search, Filter, Activity, WifiOff, Wifi, MapPin, Truck } from "lucide-react";
+import { api } from "../../shared/api";
 
 interface Machine {
   id: string;
@@ -21,16 +22,17 @@ export const FleetScreen: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Mocking API call for Fleet Telemetry
-    setTimeout(() => {
-      setMachines([
-        { id: "EQ-4501", name: "Caterpillar 320", owner: "L&T Heavy Equip", type: "Excavator", status: "Working", location: "Pune Site B", telemetry: { fuelLevel: "45%", engineHours: "3,420h", lastPing: "2 mins ago" } },
-        { id: "EQ-4502", name: "JCB 3DX Super", owner: "Ramesh Kumar", type: "Backhoe", status: "Idle", location: "Mumbai Depot", telemetry: { fuelLevel: "78%", engineHours: "1,240h", lastPing: "1 min ago" } },
-        { id: "EQ-4503", name: "Volvo EC210D", owner: "Balaji Earthmovers", type: "Excavator", status: "Offline", location: "Chennai Ring Road", telemetry: { fuelLevel: "--", engineHours: "5,100h", lastPing: "4 hours ago" } },
-        { id: "EQ-4504", name: "Tata Prima 2830", owner: "SKS Logistics", type: "Tipper", status: "Maintenance", location: "Workshop A", telemetry: { fuelLevel: "12%", engineHours: "8,900h", lastPing: "2 days ago" } },
-      ]);
-      setLoading(false);
-    }, 800);
+    const fetchFleet = async () => {
+      try {
+        const res = await api.get('/api/v1/admin/fleet');
+        setMachines(res.data);
+      } catch (error) {
+        console.error("Failed to load fleet data", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFleet();
   }, []);
 
   return (

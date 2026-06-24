@@ -1,15 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { C, FONT, R, SHADOW } from "../../shared/tokens";
-import { Users, Truck, DollarSign, AlertCircle, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { Truck, DollarSign, AlertCircle, ArrowUpRight, ArrowDownRight, Activity } from "lucide-react";
+import { api } from "../../shared/api";
 
 export const DashboardScreen: React.FC = () => {
-  // Mock data for Phase 1
-  const kpis = [
-    { title: "Total Users", value: "12,845", trend: "+14%", isUp: true, icon: <Users size={24} color={C.teal} />, bg: C.tealDim },
-    { title: "Active Machines", value: "3,492", trend: "+8%", isUp: true, icon: <Truck size={24} color={C.orange} />, bg: "rgba(232,76,30,0.15)" },
-    { title: "Escrow Volume (30d)", value: "₹42.8Cr", trend: "+22%", isUp: true, icon: <DollarSign size={24} color={C.green} />, bg: "rgba(22,163,74,0.15)" },
-    { title: "Open Disputes", value: "14", trend: "-5%", isUp: false, icon: <AlertCircle size={24} color={C.red} />, bg: "rgba(239,68,68,0.15)" },
-  ];
+  const [kpis, setKpis] = useState<any[]>([]);
+  const [recentRentals, setRecentRentals] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      try {
+        const res = await api.get('/api/v1/admin/dashboard');
+        // Map backend icon string to actual React component if needed, but since icons are React components, 
+        // we merge backend data with frontend icons
+        const iconMap: Record<string, React.ReactElement> = {
+          "Total Machines": <Truck size={24} color={C.teal} />,
+          "Active Machines": <Truck size={24} color={C.orange} />,
+          "Escrow Volume": <DollarSign size={24} color={C.green} />,
+          "Action Required": <AlertCircle size={24} color={C.red} />
+        };
+        
+        const backendKpis = res.data.kpis.map((k: any) => ({
+          ...k,
+          icon: iconMap[k.title] || <Activity size={24} />
+        }));
+
+        setKpis(backendKpis);
+        setRecentRentals(res.data.recentRentals);
+      } catch (error) {
+        console.error("Failed to load dashboard data", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDashboard();
+  }, []);
 
   return (
     <div style={{ animation: "fadeIn 0.3s ease" }}>
@@ -32,7 +58,7 @@ export const DashboardScreen: React.FC = () => {
 
       {/* KPI Grid */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px", marginBottom: "32px" }}>
-        {kpis.map((kpi, idx) => (
+        {loading ? <div style={{ padding: "20px", color: C.slate }}>Loading KPIs...</div> : kpis.map((kpi, idx) => (
           <div key={idx} style={{ background: C.white, borderRadius: R.lg, padding: "20px", border: `1px solid ${C.border}`, boxShadow: SHADOW.card }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px" }}>
               <div style={{ width: "48px", height: "48px", borderRadius: R.md, background: kpi.bg, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -68,13 +94,10 @@ export const DashboardScreen: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {[
-                { id: "R-8842", machine: "CAT 320 Excavator", renter: "L&T Construction", status: "Active", escrow: "₹1,45,000" },
-                { id: "R-8841", machine: "JCB 3DX Backhoe", renter: "Apex Builders", status: "Completed", escrow: "₹45,000" },
-                { id: "R-8840", machine: "Tata Prima 2830", renter: "SKS Logistics", status: "Pending", escrow: "₹2,10,000" },
-                { id: "R-8839", machine: "Komatsu PC210", renter: "Mega Infra", status: "Active", escrow: "₹1,80,000" },
-              ].map((row, i) => (
-                <tr key={i} style={{ borderBottom: i !== 3 ? `1px solid ${C.border}` : "none" }}>
+              {loading ? (
+                <tr><td colSpan={5} style={{ padding: "20px", color: C.slate, textAlign: "center" }}>Loading rentals...</td></tr>
+              ) : recentRentals.map((row, i) => (
+                <tr key={i} style={{ borderBottom: i !== recentRentals.length - 1 ? `1px solid ${C.border}` : "none" }}>
                   <td style={{ padding: "16px 20px", color: C.slate, fontWeight: 500, fontSize: "14px" }}>{row.id}</td>
                   <td style={{ padding: "16px 20px", color: C.navy, fontWeight: 600, fontSize: "14px" }}>{row.machine}</td>
                   <td style={{ padding: "16px 20px", color: C.navy, fontSize: "14px" }}>{row.renter}</td>
