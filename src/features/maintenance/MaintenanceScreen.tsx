@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { C, FONT, R, SHADOW } from "../../shared/tokens";
 import { Search, Filter, Wrench, AlertOctagon, CheckCircle, Clock, AlertCircle } from "lucide-react";
+import { api } from "../../shared/api";
 
 interface ServiceRecord {
   id: string;
@@ -16,14 +17,17 @@ export const MaintenanceScreen: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      setRecords([
-        { id: "SR-501", machineId: "EQ-4501", type: "Emergency SOS", description: "Engine overheating warning", status: "In Progress", date: "2026-06-24 14:30" },
-        { id: "SR-502", machineId: "EQ-4504", type: "Routine Service", description: "5000hr fluid change", status: "Pending Dispatch", date: "2026-06-23 09:00" },
-        { id: "SR-503", machineId: "EQ-4420", type: "Breakdown", description: "Hydraulic leak on boom arm", status: "Resolved", date: "2026-06-21 11:15" },
-      ]);
-      setLoading(false);
-    }, 800);
+    const fetchRecords = async () => {
+      try {
+        const res = await api.get('/api/v1/admin/maintenance');
+        setRecords(res.data);
+      } catch (error) {
+        console.error("Failed to fetch maintenance records", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchRecords();
   }, []);
 
   return (

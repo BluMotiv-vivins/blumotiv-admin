@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { C, FONT, R, SHADOW } from "../../shared/tokens";
 import { Search, Filter, CheckCircle, Clock, Map, MapPin } from "lucide-react";
+import { api } from "../../shared/api";
 
 interface TransportJob {
   id: string;
@@ -16,14 +17,17 @@ export const TransportScreen: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      setJobs([
-        { id: "TR-1029", rentalId: "R-8839", machine: "Komatsu PC210", route: "Pune → Mumbai Site C", status: "In Transit", eta: "Today, 14:00" },
-        { id: "TR-1030", rentalId: "R-8840", machine: "Tata Prima 2830", route: "Depot A → Site B", status: "Scheduled", eta: "Tomorrow, 09:00" },
-        { id: "TR-1028", rentalId: "R-8835", machine: "JCB 3DX Eco", route: "Chennai → Bangalore", status: "Delivered", eta: "Yesterday, 18:30" },
-      ]);
-      setLoading(false);
-    }, 800);
+    const fetchJobs = async () => {
+      try {
+        const res = await api.get('/api/v1/admin/transport');
+        setJobs(res.data);
+      } catch (error) {
+        console.error("Failed to fetch transport jobs", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJobs();
   }, []);
 
   return (
