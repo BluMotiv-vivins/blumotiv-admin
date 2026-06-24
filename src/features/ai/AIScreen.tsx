@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { C, FONT, R, SHADOW } from "../../shared/tokens";
 import { Brain, Cpu, Database, Activity, RefreshCw, Zap } from "lucide-react";
+import { api } from "../../shared/api";
 
 interface AIModel {
   id: string;
@@ -15,15 +16,17 @@ export const AIScreen: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      setModels([
-        { id: "MOD-01", name: "Eco-Score Evaluator v2.4", status: "Online", accuracy: "94.2%", lastTrained: "Today, 02:00 AM" },
-        { id: "MOD-02", name: "Predictive Maintenance (Hydraulics)", status: "Online", accuracy: "89.7%", lastTrained: "Yesterday, 03:30 AM" },
-        { id: "MOD-03", name: "Dynamic Pricing Engine", status: "Training", accuracy: "--", lastTrained: "In Progress (45%)" },
-        { id: "MOD-04", name: "Fraud Detection (KYC)", status: "Online", accuracy: "99.1%", lastTrained: "2026-06-20" },
-      ]);
-      setLoading(false);
-    }, 800);
+    const fetchModels = async () => {
+      try {
+        const res = await api.get('/api/v1/admin/ai');
+        setModels(res.data);
+      } catch (error) {
+        console.error("Failed to fetch AI models", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchModels();
   }, []);
 
   return (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { C, FONT, R, SHADOW } from "../../shared/tokens";
 import { Search, Filter, Gavel } from "lucide-react";
+import { api } from "../../shared/api";
 
 interface Dispute {
   id: string;
@@ -17,15 +18,17 @@ export const DisputesScreen: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Mocking API call for Disputes
-    setTimeout(() => {
-      setDisputes([
-        { id: "DSP-092", rentalId: "R-8821", parties: "Apex Builders vs L&T Heavy", issue: "Machine returned with broken hydraulic arm", status: "Open", escrowLocked: "₹1,45,000", dateFiled: "2026-06-24" },
-        { id: "DSP-091", rentalId: "R-8815", parties: "Ramesh Kumar vs Mega Infra", issue: "Excess engine hours beyond agreed limit", status: "In Review", escrowLocked: "₹25,000", dateFiled: "2026-06-22" },
-        { id: "DSP-090", rentalId: "R-8802", parties: "SKS Logistics vs Volvo CE", issue: "Late delivery dispute", status: "Resolved", escrowLocked: "₹0", dateFiled: "2026-06-18" },
-      ]);
-      setLoading(false);
-    }, 800);
+    const fetchDisputes = async () => {
+      try {
+        const res = await api.get('/api/v1/admin/disputes');
+        setDisputes(res.data);
+      } catch (error) {
+        console.error("Failed to fetch disputes", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDisputes();
   }, []);
 
   return (
