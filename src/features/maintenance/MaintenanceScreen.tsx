@@ -84,9 +84,9 @@ export const MaintenanceScreen: React.FC = () => {
                     <td style={{ padding: "16px 20px" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                         {record.status === "Resolved" ? <CheckCircle size={16} color={C.green} /> : 
-                         record.status === "In Progress" ? <Clock size={16} color={C.blue} /> : 
-                         <Clock size={16} color={C.orange} />}
-                        <span style={{ fontSize: "13px", fontWeight: 600, color: record.status === "Resolved" ? C.green : record.status === "In Progress" ? C.blue : C.orange }}>
+                         record.status === "In Progress" ? <Clock size={16} color={C.teal} /> : 
+                         <AlertCircle size={16} color={C.orange} />}
+                        <span style={{ fontSize: "13px", fontWeight: 600, color: record.status === "Resolved" ? C.green : record.status === "In Progress" ? C.teal : C.orange }}>
                           {record.status}
                         </span>
                       </div>

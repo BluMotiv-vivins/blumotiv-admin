@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { C, FONT, R, SHADOW } from "../../shared/tokens";
-import { Search, Filter, AlertTriangle, MessageSquare, ArrowRight, Gavel, FileText } from "lucide-react";
+import { Search, Filter, Shield, Gavel } from "lucide-react";
 
 interface Dispute {
   id: string;

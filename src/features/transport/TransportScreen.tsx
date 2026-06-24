@@ -84,9 +84,9 @@ export const TransportScreen: React.FC = () => {
                     <td style={{ padding: "16px 20px" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                         {job.status === "Delivered" ? <CheckCircle size={16} color={C.green} /> : 
-                         job.status === "In Transit" ? <Navigation size={16} color={C.blue} /> : 
-                         <Clock size={16} color={C.orange} />}
-                        <span style={{ fontSize: "13px", fontWeight: 600, color: job.status === "Delivered" ? C.green : job.status === "In Transit" ? C.blue : C.orange }}>
+                         job.status === "In Transit" ? <Clock size={16} color={C.teal} /> : 
+                         <MapPin size={16} color={C.orange} />}
+                        <span style={{ fontSize: "13px", fontWeight: 600, color: job.status === "Delivered" ? C.green : job.status === "In Transit" ? C.teal : C.orange }}>
                           {job.status}
                         </span>
                       </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { C, FONT, R, SHADOW } from "../../shared/tokens";
-import { Search, Filter, Box, Settings2, BarChart2 } from "lucide-react";
+import { Search, Box, Settings2, BarChart2 } from "lucide-react";
 
 export const OEMScreen: React.FC = () => {
   const [dealers, setDealers] = useState<any[]>([]);

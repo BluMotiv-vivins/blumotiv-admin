@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { C, FONT, R, SHADOW } from "../../shared/tokens";
-import { Search, Filter, MoreVertical, Eye, PlayCircle, PauseCircle, Trash2 } from "lucide-react";
+import { Search, Filter, Eye, PauseCircle, Trash2 } from "lucide-react";
 import { api } from "../../shared/api";
 
 interface Listing {

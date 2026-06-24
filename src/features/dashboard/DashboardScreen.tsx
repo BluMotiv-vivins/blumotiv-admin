@@ -1,6 +1,6 @@
 import React from "react";
 import { C, FONT, R, SHADOW } from "../../shared/tokens";
-import { Users, Truck, Activity, DollarSign, AlertCircle, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { Users, Truck, DollarSign, AlertCircle, ArrowUpRight, ArrowDownRight } from "lucide-react";
 
 export const DashboardScreen: React.FC = () => {
   // Mock data for Phase 1
