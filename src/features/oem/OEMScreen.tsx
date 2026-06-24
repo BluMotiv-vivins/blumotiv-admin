@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { C, FONT, R, SHADOW } from "../../shared/tokens";
 import { Search, Box, Settings2, BarChart2 } from "lucide-react";
+import { api } from "../../shared/api";
 
 export const OEMScreen: React.FC = () => {
   const [dealers, setDealers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      setDealers([
-        { id: "DLR-992", name: "L&T Construction Equipment", brand: "Komatsu", city: "Pune", activeModels: 45, salesYTD: "₹45.2Cr" },
-        { id: "DLR-993", name: "Volvo CE India Private", brand: "Volvo", city: "Bangalore", activeModels: 32, salesYTD: "₹28.4Cr" },
-        { id: "DLR-994", name: "JCB India Limited", brand: "JCB", city: "Delhi", activeModels: 120, salesYTD: "₹82.1Cr" },
-      ]);
-      setLoading(false);
-    }, 800);
+    const fetchDealers = async () => {
+      try {
+        const res = await api.get('/api/v1/admin/oem');
+        setDealers(res.data);
+      } catch (error) {
+        console.error("Failed to fetch OEM dealers", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDealers();
   }, []);
 
   return (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { C, FONT, R, SHADOW } from "../../shared/tokens";
 import { Search, Filter, DollarSign, ArrowUpRight, ArrowDownRight, CreditCard, Lock, CheckCircle } from "lucide-react";
+import { api } from "../../shared/api";
 
 interface Transaction {
   id: string;
@@ -16,16 +17,17 @@ export const FinanceScreen: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Mocking API call for Finance ledger
-    setTimeout(() => {
-      setTransactions([
-        { id: "TX-10492", date: "2026-06-24 10:15 AM", type: "Rental Payment", parties: "L&T → Platform Escrow", amount: "₹1,45,000", status: "Pending Escrow" },
-        { id: "TX-10491", date: "2026-06-23 18:30 PM", type: "Platform Fee", parties: "Escrow → BluMotiv", amount: "₹4,500", status: "Completed" },
-        { id: "TX-10490", date: "2026-06-23 18:29 PM", type: "Escrow Release", parties: "Escrow → Balaji Earthmovers", amount: "₹40,500", status: "Completed" },
-        { id: "TX-10489", date: "2026-06-22 09:00 AM", type: "Machine Purchase", parties: "Mega Infra → Volvo CE", amount: "₹42,00,000", status: "Failed" },
-      ]);
-      setLoading(false);
-    }, 800);
+    const fetchTransactions = async () => {
+      try {
+        const res = await api.get('/api/v1/admin/finance');
+        setTransactions(res.data);
+      } catch (error) {
+        console.error("Failed to fetch finance ledger", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTransactions();
   }, []);
 
   return (
