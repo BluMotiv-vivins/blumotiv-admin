@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { C, FONT, R, SHADOW } from "../../shared/tokens";
-import { Search, Filter, Wrench, AlertOctagon, CheckCircle, Clock } from "lucide-react";
+import { Search, Filter, Wrench, AlertOctagon, CheckCircle, Clock, AlertCircle } from "lucide-react";
 
 interface ServiceRecord {
   id: string;

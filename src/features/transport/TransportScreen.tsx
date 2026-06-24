@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { C, FONT, R, SHADOW } from "../../shared/tokens";
-import { Search, Filter, Navigation, CheckCircle, Clock, Map } from "lucide-react";
+import { Search, Filter, CheckCircle, Clock, Map, MapPin } from "lucide-react";
 
 interface TransportJob {
   id: string;
