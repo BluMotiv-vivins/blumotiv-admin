@@ -15,7 +15,7 @@ export const DashboardScreen: React.FC = () => {
         // Map backend icon string to actual React component if needed, but since icons are React components, 
         // we merge backend data with frontend icons
         const iconMap: Record<string, React.ReactElement> = {
-          "Total Machines": <Truck size={24} color={C.teal} />,
+          "Total Machines": <Truck size={24} color={C.orange} />,
           "Active Machines": <Truck size={24} color={C.orange} />,
           "Escrow Volume": <DollarSign size={24} color={C.green} />,
           "Action Required": <AlertCircle size={24} color={C.red} />
@@ -81,7 +81,7 @@ export const DashboardScreen: React.FC = () => {
         <div style={{ background: C.white, borderRadius: R.lg, border: `1px solid ${C.border}`, boxShadow: SHADOW.card, overflow: "hidden" }}>
           <div style={{ padding: "20px", borderBottom: `1px solid ${C.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <h2 style={{ fontSize: "18px", fontWeight: 700, color: C.navy, margin: 0 }}>Recent Rentals</h2>
-            <button style={{ color: C.teal, fontWeight: 600, fontSize: "14px" }}>View All</button>
+            <button style={{ color: C.orange, fontWeight: 600, fontSize: "14px" }}>View All</button>
           </div>
           <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left" }}>
             <thead>
@@ -104,8 +104,8 @@ export const DashboardScreen: React.FC = () => {
                   <td style={{ padding: "16px 20px" }}>
                     <span style={{ 
                       padding: "4px 8px", borderRadius: R.sm, fontSize: "12px", fontWeight: 600,
-                      background: row.status === "Active" ? "rgba(13,148,136,0.1)" : row.status === "Completed" ? "rgba(22,163,74,0.1)" : "rgba(232,76,30,0.1)",
-                      color: row.status === "Active" ? C.teal : row.status === "Completed" ? C.green : C.orange
+                      background: row.status === "Active" ? "rgba(232,76,30,0.1)" : row.status === "Completed" ? "rgba(22,163,74,0.1)" : "rgba(239,68,68,0.1)",
+                      color: row.status === "Active" ? C.orange : row.status === "Completed" ? C.green : C.red
                     }}>
                       {row.status}
                     </span>
@@ -136,7 +136,7 @@ export const DashboardScreen: React.FC = () => {
                   <span style={{ fontSize: "12px", color: C.slate }}>{alert.time}</span>
                 </div>
                 <div style={{ fontSize: "13px", color: C.slate, lineHeight: 1.4 }}>{alert.desc}</div>
-                <button style={{ color: C.teal, fontSize: "13px", fontWeight: 600, textAlign: "left", marginTop: "4px" }}>Resolve Now →</button>
+                <button style={{ color: C.orange, fontSize: "13px", fontWeight: 600, textAlign: "left", marginTop: "4px" }}>Resolve Now →</button>
               </div>
             ))}
           </div>

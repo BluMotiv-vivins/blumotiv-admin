@@ -24,7 +24,7 @@ export const AppShell: React.FC = () => {
       {/* Sidebar */}
       <aside style={{ width: "260px", background: C.navy, color: C.white, display: "flex", flexDirection: "column" }}>
         <div style={{ padding: "24px", borderBottom: `1px solid ${C.borderDark}` }}>
-          <h1 style={{ fontFamily: FONT.condensed, fontSize: "24px", fontWeight: 800, color: C.tealLight }}>BluMotiv Admin</h1>
+          <h1 style={{ fontFamily: FONT.condensed, fontSize: "24px", fontWeight: 800, color: C.orangeLight }}>BluMotiv Admin</h1>
           <div style={{ fontSize: "12px", color: C.slateLight, marginTop: "4px" }}>Platform Operations</div>
         </div>
         
@@ -71,7 +71,7 @@ export const AppShell: React.FC = () => {
               <div style={{ fontWeight: 600, fontSize: "14px", color: C.navy }}>Super Admin</div>
               <div style={{ fontSize: "11px", color: C.slate }}>admin@blumotiv.com</div>
             </div>
-            <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: C.teal, color: C.white, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700 }}>
+            <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: C.orange, color: C.white, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700 }}>
               SA
             </div>
           </div>

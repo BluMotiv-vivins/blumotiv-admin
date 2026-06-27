@@ -83,7 +83,7 @@ export const OEMScreen: React.FC = () => {
                     </td>
                     <td style={{ padding: "16px 20px", textAlign: "right" }}>
                       <button style={{ padding: "4px", color: C.slate, marginRight: "8px" }}><Settings2 size={18} /></button>
-                      <button style={{ padding: "4px", color: C.teal }}><BarChart2 size={18} /></button>
+                      <button style={{ padding: "4px", color: C.orange }}><BarChart2 size={18} /></button>
                     </td>
                   </tr>
                 ))

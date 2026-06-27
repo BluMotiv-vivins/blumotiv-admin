@@ -106,7 +106,7 @@ export const MarketplaceScreen: React.FC = () => {
                     <td style={{ padding: "16px 20px", color: C.slate, fontSize: "14px" }}>{item.owner}</td>
                     <td style={{ padding: "16px 20px", fontSize: "14px" }}>
                       <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
-                        <span style={{ padding: "2px 6px", borderRadius: R.sm, fontSize: "11px", fontWeight: 700, background: item.type === "Rent" ? C.tealDim : "rgba(232,76,30,0.15)", color: item.type === "Rent" ? C.teal : C.orange }}>{item.type}</span>
+                        <span style={{ padding: "2px 6px", borderRadius: R.sm, fontSize: "11px", fontWeight: 700, background: item.type === "Rent" ? C.orangeDim : "rgba(232,76,30,0.15)", color: item.type === "Rent" ? C.orange : C.orange }}>{item.type}</span>
                         <span style={{ fontWeight: 600, color: C.navy }}>{item.price}</span>
                       </div>
                     </td>
@@ -121,13 +121,13 @@ export const MarketplaceScreen: React.FC = () => {
                     <td style={{ padding: "16px 20px" }}>
                       <span style={{ padding: "4px 8px", borderRadius: R.sm, fontSize: "12px", fontWeight: 600, 
                         background: item.status === "Active" ? "rgba(22,163,74,0.1)" : item.status === "Draft" ? C.border : "rgba(13,148,136,0.1)", 
-                        color: item.status === "Active" ? C.green : item.status === "Draft" ? C.slate : C.teal 
+                        color: item.status === "Active" ? C.green : item.status === "Draft" ? C.slate : C.orange 
                       }}>
                         {item.status}
                       </span>
                     </td>
                     <td style={{ padding: "16px 20px", textAlign: "right", display: "flex", justifyContent: "flex-end", gap: "8px" }}>
-                      <button title="View Listing" style={{ padding: "4px", color: C.teal }}><Eye size={18} /></button>
+                      <button title="View Listing" style={{ padding: "4px", color: C.orange }}><Eye size={18} /></button>
                       <button title="Pause/Delist" style={{ padding: "4px", color: C.orange }}><PauseCircle size={18} /></button>
                       <button title="Delete" style={{ padding: "4px", color: C.red }}><Trash2 size={18} /></button>
                     </td>

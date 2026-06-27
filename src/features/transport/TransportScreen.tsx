@@ -77,7 +77,7 @@ export const TransportScreen: React.FC = () => {
                     <td style={{ padding: "16px 20px", color: C.navy, fontWeight: 600, fontSize: "14px" }}>{job.id}</td>
                     <td style={{ padding: "16px 20px", fontSize: "14px" }}>
                       <div style={{ color: C.navy, fontWeight: 700 }}>{job.machine}</div>
-                      <div style={{ color: C.teal, fontSize: "12px", fontWeight: 600, marginTop: "2px" }}>Rental: {job.rentalId}</div>
+                      <div style={{ color: C.orange, fontSize: "12px", fontWeight: 600, marginTop: "2px" }}>Rental: {job.rentalId}</div>
                     </td>
                     <td style={{ padding: "16px 20px", fontSize: "14px" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "6px", color: C.slate }}>
@@ -88,9 +88,9 @@ export const TransportScreen: React.FC = () => {
                     <td style={{ padding: "16px 20px" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                         {job.status === "Delivered" ? <CheckCircle size={16} color={C.green} /> : 
-                         job.status === "In Transit" ? <Clock size={16} color={C.teal} /> : 
+                         job.status === "In Transit" ? <Clock size={16} color={C.orange} /> : 
                          <MapPin size={16} color={C.orange} />}
-                        <span style={{ fontSize: "13px", fontWeight: 600, color: job.status === "Delivered" ? C.green : job.status === "In Transit" ? C.teal : C.orange }}>
+                        <span style={{ fontSize: "13px", fontWeight: 600, color: job.status === "Delivered" ? C.green : job.status === "In Transit" ? C.orange : C.orange }}>
                           {job.status}
                         </span>
                       </div>

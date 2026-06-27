@@ -95,11 +95,11 @@ export const FleetScreen: React.FC = () => {
                         {machine.status === "Working" ? <Activity size={16} color={C.green} /> : 
                          machine.status === "Offline" ? <WifiOff size={16} color={C.slateLight} /> :
                          machine.status === "Maintenance" ? <Activity size={16} color={C.orange} /> :
-                         <Wifi size={16} color={C.teal} />}
+                         <Wifi size={16} color={C.orange} />}
                         <span style={{ 
                           fontSize: "13px", fontWeight: 600,
                           color: machine.status === "Working" ? C.green : 
-                                 machine.status === "Idle" ? C.teal :
+                                 machine.status === "Idle" ? C.orange :
                                  machine.status === "Maintenance" ? C.orange : C.slate
                         }}>
                           {machine.status}

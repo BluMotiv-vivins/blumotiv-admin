@@ -34,7 +34,7 @@ export const AIScreen: React.FC = () => {
       <div style={{ marginBottom: "24px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
         <div>
           <h1 style={{ fontFamily: FONT.condensed, fontSize: "32px", fontWeight: 800, color: C.navy, margin: 0, display: "flex", alignItems: "center", gap: "12px" }}>
-            <Brain color={C.teal} size={32} /> BluFleet AI Hub
+            <Brain color={C.orange} size={32} /> BluFleet AI Hub
           </h1>
           <p style={{ color: C.slate, margin: "4px 0 0 0" }}>Manage ML models, analytics pipelines, and dynamic pricing engines.</p>
         </div>
@@ -56,7 +56,7 @@ export const AIScreen: React.FC = () => {
             </div>
             <div>
               <div style={{ fontSize: "12px", color: C.slateLight }}>Inference Rate</div>
-              <div style={{ fontSize: "24px", fontWeight: 800, color: C.tealLight }}>1.2k/sec</div>
+              <div style={{ fontSize: "24px", fontWeight: 800, color: C.orangeLight }}>1.2k/sec</div>
             </div>
           </div>
         </div>
@@ -65,9 +65,9 @@ export const AIScreen: React.FC = () => {
           <h3 style={{ fontSize: "18px", fontWeight: 700, color: C.navy, margin: "0 0 16px 0", fontFamily: FONT.condensed }}>Active Pipeline</h3>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <div style={{ flex: 1, background: C.offWhite, height: "8px", borderRadius: "4px", overflow: "hidden" }}>
-              <div style={{ width: "75%", background: C.teal, height: "100%", animation: "pulse 2s infinite" }} />
+              <div style={{ width: "75%", background: C.orange, height: "100%", animation: "pulse 2s infinite" }} />
             </div>
-            <span style={{ fontSize: "14px", fontWeight: 700, color: C.teal }}>Processing Telemetry Batch (75%)</span>
+            <span style={{ fontSize: "14px", fontWeight: 700, color: C.orange }}>Processing Telemetry Batch (75%)</span>
           </div>
         </div>
       </div>
@@ -105,9 +105,9 @@ export const AIScreen: React.FC = () => {
                     <td style={{ padding: "16px 20px" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                         {model.status === "Online" ? <Activity size={16} color={C.green} /> : 
-                         model.status === "Training" ? <RefreshCw size={16} color={C.teal} className="spin" /> : 
+                         model.status === "Training" ? <RefreshCw size={16} color={C.orange} className="spin" /> : 
                          <Zap size={16} color={C.slate} />}
-                        <span style={{ fontSize: "13px", fontWeight: 600, color: model.status === "Online" ? C.green : model.status === "Training" ? C.teal : C.slate }}>
+                        <span style={{ fontSize: "13px", fontWeight: 600, color: model.status === "Online" ? C.green : model.status === "Training" ? C.orange : C.slate }}>
                           {model.status}
                         </span>
                       </div>

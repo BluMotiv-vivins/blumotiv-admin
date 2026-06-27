@@ -81,7 +81,7 @@ export const DisputesScreen: React.FC = () => {
                   <tr key={dispute.id} style={{ borderBottom: i !== disputes.length - 1 ? `1px solid ${C.border}` : "none", transition: "background 0.2s" }}>
                     <td style={{ padding: "16px 20px", fontSize: "14px" }}>
                       <div style={{ color: C.navy, fontWeight: 600 }}>{dispute.id}</div>
-                      <div style={{ color: C.slate, fontSize: "12px", marginTop: "2px" }}>Rental: <span style={{ color: C.teal, fontWeight: 600 }}>{dispute.rentalId}</span></div>
+                      <div style={{ color: C.slate, fontSize: "12px", marginTop: "2px" }}>Rental: <span style={{ color: C.orange, fontWeight: 600 }}>{dispute.rentalId}</span></div>
                     </td>
                     <td style={{ padding: "16px 20px", fontSize: "14px" }}>
                       <div style={{ color: C.navy, fontWeight: 700, marginBottom: "2px" }}>{dispute.parties}</div>

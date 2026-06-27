@@ -73,7 +73,7 @@ export const MaintenanceScreen: React.FC = () => {
                       {record.id}
                       <div style={{ color: C.slate, fontSize: "12px", marginTop: "4px" }}>{record.date}</div>
                     </td>
-                    <td style={{ padding: "16px 20px", color: C.teal, fontWeight: 600, fontSize: "14px" }}>{record.machineId}</td>
+                    <td style={{ padding: "16px 20px", color: C.orange, fontWeight: 600, fontSize: "14px" }}>{record.machineId}</td>
                     <td style={{ padding: "16px 20px" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                         {record.type === "Emergency SOS" ? <AlertOctagon size={16} color={C.red} /> : 
@@ -88,9 +88,9 @@ export const MaintenanceScreen: React.FC = () => {
                     <td style={{ padding: "16px 20px" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                         {record.status === "Resolved" ? <CheckCircle size={16} color={C.green} /> : 
-                         record.status === "In Progress" ? <Clock size={16} color={C.teal} /> : 
+                         record.status === "In Progress" ? <Clock size={16} color={C.orange} /> : 
                          <AlertCircle size={16} color={C.orange} />}
-                        <span style={{ fontSize: "13px", fontWeight: 600, color: record.status === "Resolved" ? C.green : record.status === "In Progress" ? C.teal : C.orange }}>
+                        <span style={{ fontSize: "13px", fontWeight: 600, color: record.status === "Resolved" ? C.green : record.status === "In Progress" ? C.orange : C.orange }}>
                           {record.status}
                         </span>
                       </div>
