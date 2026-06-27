@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
 import { C, FONT, R } from "../../shared/tokens";
-import { LayoutDashboard, Users, ShoppingCart, Truck, CreditCard, AlertTriangle, Settings, LogOut, Wrench, Navigation, Box, Brain } from "lucide-react";
+import { LayoutDashboard, Users, ShoppingCart, Truck, CreditCard, AlertTriangle, Settings, LogOut, Wrench, Navigation, Box, Brain, Briefcase } from "lucide-react";
 import { GlobalSearch } from "./GlobalSearch";
 
 export const AppShell: React.FC = () => {
@@ -17,6 +17,7 @@ export const AppShell: React.FC = () => {
     { path: "/maintenance", label: "Maintenance & SOS", icon: <Wrench size={18} /> },
     { path: "/transport", label: "Transport Jobs", icon: <Navigation size={18} /> },
     { path: "/oem", label: "OEM Admin", icon: <Box size={18} /> },
+    { path: "/investment", label: "Investments", icon: <Briefcase size={18} /> },
     { path: "/ai", label: "BluFleet AI", icon: <Brain size={18} /> },
   ];
 

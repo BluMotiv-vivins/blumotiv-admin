@@ -12,6 +12,7 @@ import { MaintenanceScreen } from "./features/maintenance/MaintenanceScreen";
 import { TransportScreen } from "./features/transport/TransportScreen";
 import { OEMScreen } from "./features/oem/OEMScreen";
 import { AIScreen } from "./features/ai/AIScreen";
+import { InvestmentScreen } from './features/investment/InvestmentScreen';
 
 let injected = false;
 function injectGlobal() {
@@ -41,6 +42,7 @@ export const App: React.FC = () => {
           <Route path="/transport" element={<TransportScreen />} />
           <Route path="/oem" element={<OEMScreen />} />
           <Route path="/ai" element={<AIScreen />} />
+          <Route path="/investment" element={<InvestmentScreen />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

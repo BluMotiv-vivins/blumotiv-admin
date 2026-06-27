@@ -10,8 +10,17 @@ export const OEMScreen: React.FC = () => {
   useEffect(() => {
     const fetchDealers = async () => {
       try {
-        const res = await api.get('/api/v1/admin/oem');
-        setDealers(res.data);
+        const res = await api.get('/api/v1/oem/dealers');
+        // Map the new schema to the expected frontend fields
+        const mapped = res.data.map((d: any) => ({
+          id: d.dealer_id,
+          name: d.name,
+          city: d.location || "Unknown",
+          brand: d.partner_id ? "Authorized" : "Independent", // Or fetch partner details
+          activeModels: d.capacity || 0,
+          salesYTD: "N/A"
+        }));
+        setDealers(mapped);
       } catch (error) {
         console.error("Failed to fetch OEM dealers", error);
       } finally {
