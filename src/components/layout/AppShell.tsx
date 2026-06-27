@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
 import { C, FONT, R } from "../../shared/tokens";
 import { LayoutDashboard, Users, ShoppingCart, Truck, CreditCard, AlertTriangle, Settings, LogOut, Wrench, Navigation, Box, Brain } from "lucide-react";
+import { GlobalSearch } from "./GlobalSearch";
 
 export const AppShell: React.FC = () => {
   const location = useLocation();
@@ -65,7 +66,10 @@ export const AppShell: React.FC = () => {
       {/* Main Content Area */}
       <main style={{ flex: 1, background: C.offWhite, overflowY: "auto", display: "flex", flexDirection: "column" }}>
         {/* Top Navbar */}
-        <header style={{ height: "64px", background: C.white, borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "flex-end", padding: "0 24px" }}>
+        <header style={{ height: "64px", background: C.white, borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 24px" }}>
+          <div>
+            <GlobalSearch />
+          </div>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <div style={{ textAlign: "right" }}>
               <div style={{ fontWeight: 600, fontSize: "14px", color: C.navy }}>Super Admin</div>
