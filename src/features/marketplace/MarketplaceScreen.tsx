@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { C, FONT, R, SHADOW } from "../../shared/tokens";
-import { Search, Filter, Eye, PauseCircle, Trash2 } from "lucide-react";
+import { Search, Filter, Eye, PauseCircle, Trash2, MapPin } from "lucide-react";
 import { api } from "../../shared/api";
 
 interface Listing {
   id: string;
   title: string;
   owner: string;
+  location: string;
   type: "Rent" | "Sale";
   price: string;
   status: "Active" | "Draft" | "Rented" | "Sold";
@@ -17,6 +18,7 @@ export const MarketplaceScreen: React.FC = () => {
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"listings" | "rentals">("listings");
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -27,6 +29,7 @@ export const MarketplaceScreen: React.FC = () => {
           id: l.listing_id.split('-')[0].toUpperCase(),
           title: `${l.brand || ''} ${l.machine_name}`.trim(),
           owner: l.seller_name,
+          location: l.location || "Unknown",
           type: l.is_for_sale ? "Sale" : "Rent",
           price: l.is_for_sale ? `₹${(l.price_buy / 100000).toFixed(1)}L` : `₹${l.price_rent_day}/day`,
           status: l.status === "active" ? "Active" : l.status.charAt(0).toUpperCase() + l.status.slice(1),
@@ -42,9 +45,20 @@ export const MarketplaceScreen: React.FC = () => {
     fetchListings();
   }, []);
 
+  const filteredListings = useMemo(() => {
+    if (!searchQuery) return listings;
+    const q = searchQuery.toLowerCase();
+    return listings.filter(l => 
+      l.id.toLowerCase().includes(q) || 
+      l.title.toLowerCase().includes(q) || 
+      l.owner.toLowerCase().includes(q) ||
+      l.location.toLowerCase().includes(q)
+    );
+  }, [listings, searchQuery]);
+
   return (
     <div style={{ animation: "fadeIn 0.3s ease" }}>
-      <div style={{ marginBottom: "24px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+      <div style={{ marginBottom: "24px", display: "flex", justifyItems: "center", justifyContent: "space-between", alignItems: "flex-end" }}>
         <div>
           <h1 style={{ fontFamily: FONT.condensed, fontSize: "32px", fontWeight: 800, color: C.navy, margin: 0 }}>Marketplace Admin</h1>
           <p style={{ color: C.slate, margin: "4px 0 0 0" }}>Manage listings, active rentals, and marketplace integrity.</p>
@@ -70,7 +84,9 @@ export const MarketplaceScreen: React.FC = () => {
             <Search size={18} color={C.slate} />
             <input 
               type="text" 
-              placeholder="Search listings by ID, Title, or Owner..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search listings by ID, Title, Owner, or Location..." 
               style={{ border: "none", background: "transparent", width: "100%", color: C.navy, fontSize: "14px" }}
             />
           </div>
@@ -87,6 +103,7 @@ export const MarketplaceScreen: React.FC = () => {
                 <th style={{ padding: "12px 20px", fontWeight: 600 }}>Listing ID</th>
                 <th style={{ padding: "12px 20px", fontWeight: 600 }}>Machine Details</th>
                 <th style={{ padding: "12px 20px", fontWeight: 600 }}>Owner</th>
+                <th style={{ padding: "12px 20px", fontWeight: 600 }}>Location</th>
                 <th style={{ padding: "12px 20px", fontWeight: 600 }}>Type & Price</th>
                 <th style={{ padding: "12px 20px", fontWeight: 600 }}>Axon Score</th>
                 <th style={{ padding: "12px 20px", fontWeight: 600 }}>Status</th>
@@ -96,14 +113,21 @@ export const MarketplaceScreen: React.FC = () => {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={7} style={{ padding: "40px", textAlign: "center", color: C.slate }}>Loading listings...</td>
+                  <td colSpan={8} style={{ padding: "40px", textAlign: "center", color: C.slate }}>Loading listings...</td>
+                </tr>
+              ) : filteredListings.length === 0 ? (
+                <tr>
+                  <td colSpan={8} style={{ padding: "40px", textAlign: "center", color: C.slate }}>No listings found matching "{searchQuery}".</td>
                 </tr>
               ) : (
-                listings.map((item, i) => (
-                  <tr key={item.id} style={{ borderBottom: i !== listings.length - 1 ? `1px solid ${C.border}` : "none", transition: "background 0.2s" }}>
+                filteredListings.map((item, i) => (
+                  <tr key={item.id} style={{ borderBottom: i !== filteredListings.length - 1 ? `1px solid ${C.border}` : "none", transition: "background 0.2s" }}>
                     <td style={{ padding: "16px 20px", color: C.slate, fontWeight: 500, fontSize: "14px" }}>{item.id}</td>
                     <td style={{ padding: "16px 20px", color: C.navy, fontWeight: 700, fontSize: "14px" }}>{item.title}</td>
                     <td style={{ padding: "16px 20px", color: C.slate, fontSize: "14px" }}>{item.owner}</td>
+                    <td style={{ padding: "16px 20px", color: C.slate, fontSize: "14px", display: "flex", alignItems: "center", gap: "4px" }}>
+                      <MapPin size={14} /> {item.location}
+                    </td>
                     <td style={{ padding: "16px 20px", fontSize: "14px" }}>
                       <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
                         <span style={{ padding: "2px 6px", borderRadius: R.sm, fontSize: "11px", fontWeight: 700, background: item.type === "Rent" ? C.orangeDim : "rgba(232,76,30,0.15)", color: item.type === "Rent" ? C.orange : C.orange }}>{item.type}</span>
@@ -126,10 +150,12 @@ export const MarketplaceScreen: React.FC = () => {
                         {item.status}
                       </span>
                     </td>
-                    <td style={{ padding: "16px 20px", textAlign: "right", display: "flex", justifyContent: "flex-end", gap: "8px" }}>
-                      <button title="View Listing" style={{ padding: "4px", color: C.orange }}><Eye size={18} /></button>
-                      <button title="Pause/Delist" style={{ padding: "4px", color: C.orange }}><PauseCircle size={18} /></button>
-                      <button title="Delete" style={{ padding: "4px", color: C.red }}><Trash2 size={18} /></button>
+                    <td style={{ padding: "16px 20px", textAlign: "right" }}>
+                      <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px" }}>
+                        <button title="View Listing" style={{ padding: "4px", color: C.orange }}><Eye size={18} /></button>
+                        <button title="Pause/Delist" style={{ padding: "4px", color: C.orange }}><PauseCircle size={18} /></button>
+                        <button title="Delete" style={{ padding: "4px", color: C.red }}><Trash2 size={18} /></button>
+                      </div>
                     </td>
                   </tr>
                 ))
