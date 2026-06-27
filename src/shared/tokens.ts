@@ -5,6 +5,8 @@ export const C = {
   navyLight:   "#1E2F47",
   orange:      "#E84C1E",
   orangeLight: "#FF6B3D",
+  orangeDim:   "rgba(232,76,30,0.15)",
+  orangeBorder:"rgba(232,76,30,0.35)",
   teal:        "#0D9488",
   tealLight:   "#14B8A8",
   tealDim:     "rgba(13,148,136,0.15)",
