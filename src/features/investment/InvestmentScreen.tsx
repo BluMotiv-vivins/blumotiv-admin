@@ -37,7 +37,7 @@ export const InvestmentScreen: React.FC = () => {
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px", marginBottom: "24px" }}>
         {[
-          { label: "Total Assets Funded", value: "$4.2M", icon: <TrendingUp size={24} color={C.blue} /> },
+          { label: "Total Assets Funded", value: "$4.2M", icon: <TrendingUp size={24} color={C.teal} /> },
           { label: "Active Investors", value: "842", icon: <Activity size={24} color={C.orange} /> },
           { label: "Avg Annual Yield", value: "18.4%", icon: <DollarSign size={24} color={C.green} /> }
         ].map(stat => (
