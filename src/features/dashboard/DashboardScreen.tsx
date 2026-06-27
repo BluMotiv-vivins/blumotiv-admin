@@ -89,18 +89,22 @@ export const DashboardScreen: React.FC = () => {
                 <th style={{ padding: "12px 20px", fontWeight: 600 }}>ID</th>
                 <th style={{ padding: "12px 20px", fontWeight: 600 }}>Machine</th>
                 <th style={{ padding: "12px 20px", fontWeight: 600 }}>Renter</th>
+                <th style={{ padding: "12px 20px", fontWeight: 600 }}>Location</th>
+                <th style={{ padding: "12px 20px", fontWeight: 600 }}>Dates</th>
                 <th style={{ padding: "12px 20px", fontWeight: 600 }}>Status</th>
                 <th style={{ padding: "12px 20px", fontWeight: 600 }}>Escrow</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan={5} style={{ padding: "20px", color: C.slate, textAlign: "center" }}>Loading rentals...</td></tr>
+                <tr><td colSpan={7} style={{ padding: "20px", color: C.slate, textAlign: "center" }}>Loading rentals...</td></tr>
               ) : recentRentals.map((row, i) => (
                 <tr key={i} style={{ borderBottom: i !== recentRentals.length - 1 ? `1px solid ${C.border}` : "none" }}>
                   <td style={{ padding: "16px 20px", color: C.slate, fontWeight: 500, fontSize: "14px" }}>{row.id}</td>
                   <td style={{ padding: "16px 20px", color: C.navy, fontWeight: 600, fontSize: "14px" }}>{row.machine}</td>
                   <td style={{ padding: "16px 20px", color: C.navy, fontSize: "14px" }}>{row.renter}</td>
+                  <td style={{ padding: "16px 20px", color: C.navy, fontSize: "14px" }}>{row.location}</td>
+                  <td style={{ padding: "16px 20px", color: C.slate, fontSize: "13px" }}>{row.dates}</td>
                   <td style={{ padding: "16px 20px" }}>
                     <span style={{ 
                       padding: "4px 8px", borderRadius: R.sm, fontSize: "12px", fontWeight: 600,
