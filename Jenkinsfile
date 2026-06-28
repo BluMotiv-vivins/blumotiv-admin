@@ -5,10 +5,22 @@ pipeline {
         REGION     = 'us-central1'
         REGISTRY   = "${REGION}-docker.pkg.dev/${PROJECT_ID}/blumotiv"
         SVC_NAME   = 'blumotiv-admin'
+        PATH       = "/var/jenkins_home/google-cloud-sdk/bin:${env.PATH}"
     }
     stages {
         stage('Checkout') {
             steps { checkout scm }
+        }
+        stage('Install gcloud CLI') {
+            steps {
+                sh '''
+                if ! command -v gcloud &> /dev/null; then
+                    echo "gcloud not found. Installing..."
+                    curl -sSL https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-linux-x86_64.tar.gz -o /tmp/gcloud.tar.gz
+                    tar -xf /tmp/gcloud.tar.gz -C /var/jenkins_home
+                fi
+                '''
+            }
         }
         stage('Auth GCP') {
             steps {
