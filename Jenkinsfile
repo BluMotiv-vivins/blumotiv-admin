@@ -32,7 +32,7 @@ pipeline {
                 script {
                     def buildNo = env.BUILD_NUMBER
                     sh """
-                        docker build \
+                        docker build --platform linux/amd64 \
                             -t ${REGISTRY}/${SVC_NAME}:${buildNo} \
                             -t ${REGISTRY}/${SVC_NAME}:latest \
                             .
