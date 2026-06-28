@@ -14,10 +14,10 @@ pipeline {
         stage('Install gcloud CLI') {
             steps {
                 sh '''
-                if ! command -v gcloud &> /dev/null; then
+                if ! command -v gcloud >/dev/null 2>&1; then
                     echo "gcloud not found. Installing..."
                     curl -sSL https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-linux-x86_64.tar.gz -o /tmp/gcloud.tar.gz
-                    tar -xf /tmp/gcloud.tar.gz -C /var/jenkins_home
+                    tar -xf /tmp/gcloud.tar.gz -C /var/jenkins_home --no-same-owner
                 fi
                 '''
             }
