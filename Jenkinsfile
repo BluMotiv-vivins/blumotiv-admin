@@ -1,27 +1,48 @@
 pipeline {
     agent any
-
     environment {
-        DOCKER_IMAGE = 'blufleet/admin'
+        PROJECT_ID = 'blufleet-ailabs'
+        REGION     = 'us-central1'
+        REGISTRY   = "${REGION}-docker.pkg.dev/${PROJECT_ID}/blumotiv"
+        SVC_NAME   = 'blumotiv-admin'
     }
-
     stages {
         stage('Checkout') {
+            steps { checkout scm }
+        }
+        stage('Auth GCP') {
             steps {
-                checkout scm
+                sh "gcloud auth configure-docker ${REGION}-docker.pkg.dev --quiet"
             }
         }
-        stage('Build Image') {
+        stage('Build & Push') {
             steps {
-                sh 'docker build -t ${DOCKER_IMAGE}:latest .'
+                script {
+                    def buildNo = env.BUILD_NUMBER
+                    sh """
+                        docker build \
+                            -t ${REGISTRY}/${SVC_NAME}:${buildNo} \
+                            -t ${REGISTRY}/${SVC_NAME}:latest \
+                            .
+                        docker push ${REGISTRY}/${SVC_NAME}:${buildNo}
+                        docker push ${REGISTRY}/${SVC_NAME}:latest
+                    """
+                }
             }
         }
-        stage('Deploy') {
+        stage('Deploy to Cloud Run') {
             steps {
-                // Stop and remove old container if it exists
-                sh 'docker rm -f blufleet-admin || true'
-                // Run new container on port 5176 (or 80 based on deployment needs)
-                sh 'docker run -d --name blufleet-admin --restart unless-stopped -p 5176:80 ${DOCKER_IMAGE}:latest'
+                script {
+                    def buildNo = env.BUILD_NUMBER
+                    sh """
+                        gcloud run deploy ${SVC_NAME} \
+                            --image ${REGISTRY}/${SVC_NAME}:${buildNo} \
+                            --region ${REGION} \
+                            --platform managed \
+                            --allow-unauthenticated \
+                            --quiet
+                    """
+                }
             }
         }
     }
