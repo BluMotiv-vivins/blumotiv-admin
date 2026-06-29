@@ -14,13 +14,15 @@ interface Transaction {
 
 export const FinanceScreen: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [kpis, setKpis] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
         const res = await api.get('/api/v1/admin/finance');
-        setTransactions(res.data);
+        setTransactions(res.data.transactions || []);
+        setKpis(res.data.kpis || null);
       } catch (error) {
         console.error("Failed to fetch finance ledger", error);
       } finally {
@@ -48,17 +50,21 @@ export const FinanceScreen: React.FC = () => {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px", marginBottom: "32px" }}>
         <div style={{ background: C.white, borderRadius: R.lg, padding: "20px", border: `1px solid ${C.border}`, boxShadow: SHADOW.card }}>
           <div style={{ color: C.slate, fontSize: "14px", fontWeight: 600, marginBottom: "4px" }}>Total Escrow Held</div>
-          <div style={{ color: C.navy, fontSize: "28px", fontWeight: 800, fontFamily: FONT.condensed }}>₹12.4Cr</div>
-          <div style={{ color: C.green, fontSize: "12px", fontWeight: 700, display: "flex", alignItems: "center", gap: "4px", marginTop: "4px" }}><ArrowUpRight size={14} /> +8% this month</div>
+          <div style={{ color: C.navy, fontSize: "28px", fontWeight: 800, fontFamily: FONT.condensed }}>{kpis ? kpis.totalEscrow : "₹0"}</div>
+          <div style={{ color: kpis?.totalEscrowTrend?.startsWith('+') ? C.green : C.red, fontSize: "12px", fontWeight: 700, display: "flex", alignItems: "center", gap: "4px", marginTop: "4px" }}>
+            {kpis?.totalEscrowTrend?.startsWith('+') ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />} {kpis?.totalEscrowTrend || "0%"} this month
+          </div>
         </div>
         <div style={{ background: C.white, borderRadius: R.lg, padding: "20px", border: `1px solid ${C.border}`, boxShadow: SHADOW.card }}>
           <div style={{ color: C.slate, fontSize: "14px", fontWeight: 600, marginBottom: "4px" }}>Platform Fees (30d)</div>
-          <div style={{ color: C.navy, fontSize: "28px", fontWeight: 800, fontFamily: FONT.condensed }}>₹45.2L</div>
-          <div style={{ color: C.green, fontSize: "12px", fontWeight: 700, display: "flex", alignItems: "center", gap: "4px", marginTop: "4px" }}><ArrowUpRight size={14} /> +12% this month</div>
+          <div style={{ color: C.navy, fontSize: "28px", fontWeight: 800, fontFamily: FONT.condensed }}>{kpis ? kpis.platformFees : "₹0"}</div>
+          <div style={{ color: kpis?.platformFeesTrend?.startsWith('+') ? C.green : C.red, fontSize: "12px", fontWeight: 700, display: "flex", alignItems: "center", gap: "4px", marginTop: "4px" }}>
+            {kpis?.platformFeesTrend?.startsWith('+') ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />} {kpis?.platformFeesTrend || "0%"} this month
+          </div>
         </div>
         <div style={{ background: C.white, borderRadius: R.lg, padding: "20px", border: `1px solid ${C.border}`, boxShadow: SHADOW.card }}>
           <div style={{ color: C.slate, fontSize: "14px", fontWeight: 600, marginBottom: "4px" }}>Failed Transactions</div>
-          <div style={{ color: C.navy, fontSize: "28px", fontWeight: 800, fontFamily: FONT.condensed }}>12</div>
+          <div style={{ color: C.navy, fontSize: "28px", fontWeight: 800, fontFamily: FONT.condensed }}>{kpis ? kpis.failedTransactions : "0"}</div>
           <div style={{ color: C.red, fontSize: "12px", fontWeight: 700, display: "flex", alignItems: "center", gap: "4px", marginTop: "4px" }}><ArrowDownRight size={14} /> Requires attention</div>
         </div>
       </div>
