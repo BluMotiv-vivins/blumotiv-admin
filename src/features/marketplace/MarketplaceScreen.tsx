@@ -25,9 +25,10 @@ export const MarketplaceScreen: React.FC = () => {
       try {
         const response = await api.get('/api/v1/marketplace/listings');
         // Map backend ListingResponse to UI Listing format
-        const fetchedListings = response.data.map((l: any) => ({
-          id: l.listing_id.split('-')[0].toUpperCase(),
-          title: `${l.brand || ''} ${l.machine_name}`.trim(),
+        const itemsToMap = response.data.items || response.data; // Handle both new {items} format and old array format just in case
+        const fetchedListings = itemsToMap.map((l: any) => ({
+            id: l.listing_id.split('-')[0].toUpperCase(),
+            title: `${l.brand || ''} ${l.machine_name}`.trim(),
           owner: l.seller_name,
           location: l.location || "Unknown",
           type: l.is_for_sale ? "Sale" : "Rent",
